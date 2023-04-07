@@ -262,7 +262,6 @@ Token tokenizer(ali_void) {
 			readerAddChar(lexemeBuffer, READER_TERMINATOR);
 			currentToken = (*finalStateTable[state])(readerGetContent(lexemeBuffer, 0));
 			readerRestore(lexemeBuffer); //xxx
-			printf("<<<<<<<<%d\n",currentToken.code);
 			return currentToken;
 		} // switch
 

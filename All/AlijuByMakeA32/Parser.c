@@ -80,8 +80,6 @@ ali_void startParser() {
  */
 /* TO_DO: This is the main code for match - check your definition */
 ali_void matchToken(ali_int tokenCode, ali_int tokenAttribute) {
-	printf("in match token %d\n", tokenCode);
-	printf("lookahead %d\n",lookahead.code );
 	ali_int matchFlag = 1;
 	switch (lookahead.code) {
 	case KW_T:
@@ -206,7 +204,6 @@ ali_void program() {
 			matchToken(LBR_T, NO_ATTR);
 			dataSession();
 			codeSession();
-			printf("program\n");
 			matchToken(RBR_T, NO_ATTR);
 			break;
 		}
@@ -252,8 +249,6 @@ ali_int dataType(ali_int type) {
 }
 
 ali_void floatVariableList() {
-	printf("%d\n", lookahead.code);
-		printf(">>>>>>>>>in float Variable list\n");
 
 	switch (lookahead.code) {
 		case FLTV_T:
@@ -277,8 +272,6 @@ ali_void floatVariableList() {
 
 }
 ali_void intVariableList() {
-	printf("%d\n", lookahead.code);
-	printf(">>>>>>>>>in integer Variable list\n");
 
 	switch (lookahead.code) {
 		case INIV_T:
@@ -303,8 +296,6 @@ ali_void intVariableList() {
 
 }
 ali_void stringVariableList() {
-	printf("%d\n", lookahead.code);
-	printf(">>>>>>>>>in String Variable list\n");
 
 	switch (lookahead.code) {
 		case STRV_T:
@@ -338,7 +329,6 @@ ali_void stringVariableList() {
  ***********************************************************
  */
 ali_void optVarListDeclarations() {
-	printf("%d\n", lookahead.code);
 	switch (lookahead.code) {
 	case KW_T:
 		switch (lookahead.attribute.codeType) {
@@ -381,7 +371,6 @@ ali_void optVarListDeclarations() {
 ali_void codeSession() {
 //	matchToken(KW_T, KW_code);
 //	matchToken(LBR_T, NO_ATTR);
-	printf("in code session \n");
 	optionalStatements();
 //	matchToken(RBR_T, NO_ATTR);
 	printf("%s%s\n", STR_LANGNAME, ": Code Session parsed");
@@ -442,7 +431,6 @@ ali_void statements() {
  ***********************************************************
  */
 ali_void statementsPrime() {
-	printf("in statements prime\n");
 	switch (lookahead.code) {
 	case MNID_T:
 //		if (strncmp(lookahead.attribute.idLexeme, LANG_WRTE, 6) == 0) {
@@ -710,12 +698,8 @@ ali_void stringA() {
  ***********************************************************
  */
 ali_void statement() {
-	printf("*** statementsname\n");
-	printf("######%d",lookahead.code);
-
 	switch (lookahead.code) {
 	case KW_T:
-		printf("**********inside keyword\n");
 		switch (lookahead.attribute.codeType) {
 		case WHILE_N:
 			matchToken(KW_T, NO_ATTR);
@@ -749,12 +733,10 @@ ali_void statement() {
 			}
 			break;
 		default:
-			printf("######%d",lookahead.attribute.codeType);
 			printError();
 		}
 		break;
 	case MNID_T:
-		printf("*** methodsname\n");
 		if (strncmp(lookahead.attribute.idLexeme, LANG_WRTE, 6) == 0) {
 			outputStatement();
 		}
@@ -763,17 +745,14 @@ ali_void statement() {
 		}
 		break;
 	case FLTV_T:
-		printf("*** float \n");
 		floatA();
 		matchToken(EOS_T, NO_ATTR);
 		break;
 	case INIV_T:
-		printf("*** int \n");
 		intA();
 		matchToken(EOS_T, NO_ATTR);
 		break;
 	case STRV_T:
-		printf("*** int \n");
 		stringA();
 		matchToken(EOS_T, NO_ATTR);
 		break;
@@ -801,7 +780,6 @@ ali_void outputStatement() {
 	printf("%s%s\n", STR_LANGNAME, ": Output statement parsed");
 }
 ali_void inputStatement() {
-	printf("in input statement\n");
 	matchToken(MNID_T, NO_ATTR);
 	matchToken(LPR_T, NO_ATTR);
 	outputVariableList();
